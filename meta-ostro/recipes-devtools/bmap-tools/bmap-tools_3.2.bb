@@ -15,6 +15,10 @@ SRC_URI[sha256sum] = "cc6c7f7dc0a37e2a32deb127308e24e6c4b80bfb54f3803c308efab02b
 
 inherit setuptools
 
-RDEPENDS_${PN} += "python-core"
+RDEPENDS_${PN} += "python-compression python-core python-unittest"
 
 BBCLASSEXTEND = "nativesdk native"
+
+do_install_append_class-native() {
+    sed -i -e 's|^#!.*/usr/bin/env python|#! /usr/bin/env nativepython|' ${D}${bindir}/bmaptool
+}
