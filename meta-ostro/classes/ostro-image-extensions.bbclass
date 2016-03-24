@@ -12,10 +12,4 @@ COMPRESS_CMD_sha512sum = "sha512sum ${IMAGE_NAME}${IMAGE_NAME_SUFFIX}.${type} > 
 
 COMPRESS_DEPENDS_vdi = "qemu-native"
 COMPRESS_DEPENDS_bmap = "bmap-tools-native"
-COMPRESS_DEPENDS_md5sum = "coreutils-native"
-COMPRESS_DEPENDS_sha1sum = "coreutils-native"
-COMPRESS_DEPENDS_sha224sum = "coreutils-native"
-COMPRESS_DEPENDS_sha256sum = "coreutils-native"
-COMPRESS_DEPENDS_sha384sum = "coreutils-native"
-COMPRESS_DEPENDS_sha512sum = "coreutils-native"
 
