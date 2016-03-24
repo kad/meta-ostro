@@ -13,7 +13,7 @@ SRC_URI = "ftp://ftp.infradead.org/pub/bmap-tools/bmap-tools-${PV}.tgz"
 SRC_URI[md5sum] = "92cdad1cb4dfa0cca7176c8e22752616"
 SRC_URI[sha256sum] = "cc6c7f7dc0a37e2a32deb127308e24e6c4b80bfb54f3803c308efab02bf2d434"
 
-inherit setuptools
+inherit setuptools deploy
 
 RDEPENDS_${PN} += "python-compression python-core python-unittest"
 
@@ -22,3 +22,15 @@ BBCLASSEXTEND = "nativesdk native"
 do_install_append_class-native() {
     sed -i -e 's|^#!.*/usr/bin/env python|#! /usr/bin/env nativepython|' ${D}${bindir}/bmaptool
 }
+
+do_deploy[sstate-outputdirs] = "${DEPLOY_DIR_TOOLS}"
+do_deploy() {
+    cp bmaptool __main__.py
+    python -m zipfile -c bmaptool.zip bmaptools __main__.py
+    echo '#!/usr/bin/env python' | cat - bmaptool.zip > bmaptool-standalone
+    install -d ${DEPLOY_DIR_TOOLS}
+    install -m 0755 bmaptool-standalone ${DEPLOY_DIR_TOOLS}/bmaptool-${PV}
+    rm -f ${DEPLOY_DIR_TOOLS}/bmaptool
+    ln -sf ./bmaptool-${PV} ${DEPLOY_DIR_TOOLS}/bmaptool
+}
+addtask deploy before do_package after do_install
