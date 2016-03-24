@@ -28,9 +28,9 @@ do_deploy() {
     cp bmaptool __main__.py
     python -m zipfile -c bmaptool.zip bmaptools __main__.py
     echo '#!/usr/bin/env python' | cat - bmaptool.zip > bmaptool-standalone
-    install -d ${DEPLOY_DIR_TOOLS}
-    install -m 0755 bmaptool-standalone ${DEPLOY_DIR_TOOLS}/bmaptool-${PV}
-    rm -f ${DEPLOY_DIR_TOOLS}/bmaptool
-    ln -sf ./bmaptool-${PV} ${DEPLOY_DIR_TOOLS}/bmaptool
+    install -d ${DEPLOYDIR}
+    install -m 0755 bmaptool-standalone ${DEPLOYDIR}/bmaptool-${PV}
+    rm -f ${DEPLOYDIR}/bmaptool
+    ln -sf ./bmaptool-${PV} ${DEPLOYDIR}/bmaptool
 }
 addtask deploy before do_package after do_install
