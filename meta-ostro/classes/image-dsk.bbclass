@@ -27,6 +27,10 @@
 # Import additional convert tools
 inherit ostro-image-extensions
 
+# Needed to use native python libraries
+inherit pythonnative
+
+
 IMAGE_DSK_ACTIVE = "${@ bool([x for x in d.getVar('IMAGE_FSTYPES', True).split() if x == 'dsk' or x.startswith('dsk.')])}"
 python () {
     if d.getVar('IMAGE_DSK_ACTIVE', True) == 'True':
@@ -47,6 +51,8 @@ IMAGE_DEPENDS_dsk += " \
                        mtools-native:do_populate_sysroot \
                        dosfstools-native:do_populate_sysroot \
                        dosfstools-native:do_populate_sysroot \
+                       python-native:do_populate_sysroot \
+                       bmap-tools-native:do_populate_sysroot \
                      "
 INITRD_append = "${@ ('${DEPLOY_DIR_IMAGE}/' + d.getVar('INITRD_IMAGE', expand=True) + '-${MACHINE}.cpio.gz') if d.getVar('INITRD_IMAGE', True) and ${IMAGE_DSK_ACTIVE} else ''}"
 
