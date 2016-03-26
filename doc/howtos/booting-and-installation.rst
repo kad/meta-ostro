@@ -27,12 +27,58 @@ additional build and debugging tools that wouldn't typically be included in a pr
 dev image also will auto-login as ``root`` at the console, something that normally would not be available
 in a production device image but is quite useful during development.
 
-Using dd to Create Bootable Media
-=================================
+
+Using bmaptool to Create Bootable Media
+=======================================
 
 Once you have the :file:`.dsk.xz` Ostro OS image you need to get it
 onto your hardware platform, typically by using removable media such as a
-USB thumb drive or SD card.  The usual way to do this is with the :command:`dd` command.
+USB thumb drive or SD card.
+
+The optimal way to do this is with the :command:`bmaptool` command from `bmap-tools`_.
+Standalong version of this utility available in :file:`deploy/tools` folder after
+finished build or it can be installed in your favorite distribution using
+package manager or from source.
+
+#. Connect your USB thumb drive or SD card to your Linux-based development system
+   (minimum 4 GB card required, for some images 8 GB card might be required).
+#. If you're not sure about your media device name, use the :command:`dmesg` command to view the system log
+   and see which device the USB thumb drive or SD card was assigned (e.g. :file:`/dev/sdb`)::
+
+     $ dmesg
+
+   or you can use the :command:`lsblk` command to show the block-level devices; a USB drive usually
+   shows up as ``/sdb`` or ``/sdc``
+   (almost never as ``/sda``) and an SD card would usually show up as :file:`/dev/mmcblk0`.
+
+   Note: You should specify the whole device you're writing to with
+   :command:`bmaptool`:  (e.g., :file:`/dev/sdb` or
+   :file:`/dev/mmcblk0`) and **not** just a partition on that device (e.g., :file:`/dev/sdb1` or
+   :file:`/dev/mmcblk0p1`) on that device.
+
+#. The :command:`bmaptool` command will overwrite all content on the device so be careful specifying
+   the correct media device. In the example below, :file:`/dev/sdb` is the
+   destination USB device on our development machine::
+
+      $ sudo umount /dev/sdb*
+      $ sudo bmaptool copy <ostro-os-image> /dev/sdb
+
+.. note::
+    The :command:`bmaptool` is intelligent enough to recognize images in different
+    formats, including compressed images (.gz, .bz2, .xz) as well as flashing
+    directly from remote URL.
+
+
+Unplug the removable media from your development system and you're ready to plug
+it into your target system.
+
+.. _bmap-tools: http://git.infradead.org/users/dedekind/bmap-tools.git/blob/HEAD:/docs/README
+
+Using dd to Create Bootable Media
+=================================
+
+If for some reason usage of :command:`bmaptool` is undesirable, it is always
+possible in traditional way to do bootable images with the :command:`dd` command.
 
 #. Connect your USB thumb drive or SD card to your Linux-based development system
    (minimum 8 GB card required).
