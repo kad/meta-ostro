@@ -65,8 +65,8 @@ of the downloaded image. Be sure to download this ``.bmap`` file along with the 
    :file:`/dev/mmcblk0p1`) on that device.
 
 #. The :command:`bmaptool` command will overwrite all content on the device so be careful specifying
-   the correct media device. The ``bmaptool`` opens the removable media exclusively, helping prevent
-   writing to an unintended device.  After verifying your removable media device name, you'll need
+   the correct media device. The ``bmaptool`` opens the removable media exclusively and helps prevent
+   writing on an unintended device. After verifying your removable media device name, you'll need
    to ``umount`` the device before writing to it.
 
    In the example below, :file:`/dev/sdb` is the
