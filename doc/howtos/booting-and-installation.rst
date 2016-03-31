@@ -37,10 +37,7 @@ USB thumb drive or SD card.
 
 The recommended way to do this is with the :command:`bmaptool` command from `bmap-tools`_.
 A copy of this utility is available in the :file:`deploy/tools` folder after a Yocto Project build
-for your image is finished, or you can install the bmap-tools package with your development system's
-package manager.  For example, on Ubuntu/Debian systems use ::
-
-      $ sudo apt-get install bmap-tools
+for your image is finished.
 
 The ``bmaptool`` program automatically handles copying either compressed and uncompressed images to
 your removable media.  It also also uses a generated ``image.bmap`` file containing a checksum for
