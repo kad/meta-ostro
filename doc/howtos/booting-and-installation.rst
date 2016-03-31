@@ -73,14 +73,15 @@ of the downloaded image. Be sure to download this ``.bmap`` file along with the 
    destination USB device on our development machine::
 
       $ sudo umount /dev/sdb*
-      $ sudo bmaptool copy <ostro-os-image> /dev/sdb
+      $ sudo -E bmaptool copy <ostro-os-image> /dev/sdb
 
 .. note::
     The :command:`bmaptool` is intelligent enough to recognize images in different
     formats, including compressed images (.gz, .bz2, .xz) as well as flashing
     directly from remote URL (for example, you could specify the image source file with an
     ``http://`` address instead of downloading it first; ``bmaptool`` will automatically retrieve
-    the .bmap file).
+    the .bmap file). The ``sudo -E`` option will propagate environment variables (such as http_proxy)
+    that bmaptool might need to access the website.
 
 
 Unplug the removable media from your development system and you're ready to plug
